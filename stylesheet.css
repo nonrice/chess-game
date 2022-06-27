@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #282828;
+    min-height: 100vh;
+}
+
+#board {
+    height: min(48vw, 48vh);
+    width: min(48vw, 48vh);
+}
+
+@font-face {
+    font-family: chessPieces;
+    src: url("FreeSerif-4aeK.ttf");
+}
+
+.board-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    float: left;
+    height: min(6vw, 6vh);
+    width: min(6vw, 6vh);
+    font-size: min(6vw, 6vh);
+    font-family: chessPieces;
+}
+
+.board-cell--white {
+    background-color: #ebbd8d;
+}
+
+.board-cell--black {
+    background-color: #9c6d54;
+}
