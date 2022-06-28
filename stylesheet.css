@@ -1,3 +1,8 @@
+:root {
+    --board-side: min(56vw, 56vh);
+    --cell-side: min(7vw, 7vh);
+}
+
 body {
     display: flex;
     align-items: center;
@@ -8,13 +13,8 @@ body {
 }
 
 #board {
-    height: min(48vw, 48vh);
-    width: min(48vw, 48vh);
-}
-
-@font-face {
-    font-family: chessPieces;
-    src: url("FreeSerif-4aeK.ttf");
+    height: var(--board-side);
+    width: var(--board-side);
 }
 
 .board-cell {
@@ -23,10 +23,13 @@ body {
     justify-content: center;
 
     float: left;
-    height: min(6vw, 6vh);
-    width: min(6vw, 6vh);
-    font-size: min(6vw, 6vh);
-    font-family: chessPieces;
+    height: var(--cell-side);
+    width: var(--cell-side);
+}
+
+.board-cell > img {
+    width: 100%;
+    height: 100%;
 }
 
 .board-cell--white {
@@ -35,4 +38,9 @@ body {
 
 .board-cell--black {
     background-color: #9c6d54;
+}
+
+.board-cell--selected{
+    background-image: url("assets/13.svg");
+    background-size: var(--cell-side);
 }
