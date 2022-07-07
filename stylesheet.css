@@ -44,3 +44,8 @@ body {
     background-image: url("assets/13.svg");
     background-size: var(--cell-side);
 }
+
+.board-cell:hover{
+    background-image: url("assets/13.svg");
+    background-size: var(--cell-side);
+}
