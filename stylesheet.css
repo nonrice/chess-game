@@ -1,6 +1,6 @@
 :root {
-    --board-side: min(56vw, 56vh);
-    --cell-side: min(7vw, 7vh);
+    --board-side: min(80vw, 80vh);
+    --cell-side: min(10vw, 10vh);
 }
 
 body {
