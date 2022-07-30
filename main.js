@@ -1,11 +1,12 @@
-import { Chess } from './chess.js'
+import { Chess } from "https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js";
 
+var IS_WHITE = true;
 const GAME = new Chess();
 var SEL = false;
 var SEL_CELL = "";
 
-// NEED TO INITIALIZE THIS PER PLAYER
-var IS_WHITE = true;
+const socket = io("https://chess-game.nonrice.repl.co");
+//socket.on("found_match", (is_white) => {IS_WHITE = is_white});
 
 init_board(IS_WHITE);
 
