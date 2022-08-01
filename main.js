@@ -122,5 +122,5 @@ function init_board(is_white) {
 
 // Transform row and column into standard cell labels
 function get_cell(r, c, is_white=1){
-    return String.fromCharCode(c+97) + (is_white*7 - r + 1).toString();
+    return String.fromCharCode(c+97) + (is_white*7 + (is_white ? -1 : 1)*(r + 1)).toString();
 }
