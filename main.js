@@ -19,6 +19,12 @@ SOCKET.on("opp_move", (opp_from, opp_to, opp_promotion_piece) => {
         to: opp_to,
         promotion: opp_promotion_piece
     });
+    draw_pieces();
+});
+
+SOCKET.on("end_match", () => {
+    alert("GAME IS OVER");
+    document.getElementById("board").innerHTML = ""; // Destory the board   
 })
 
 function click(){
@@ -44,6 +50,7 @@ function click(){
             to: cell,
             promotion: promotion_piece  
         }) != null){
+            console.log("it send");
             SOCKET.emit("move", SEL_CELL, cell, promotion_piece);
         }
 
@@ -54,13 +61,12 @@ function click(){
     if (GAME.game_over()){
         alert("GAME IS OVER");
         document.getElementById("board").innerHTML = ""; // Destory the board   
-        socket.emit("end_match");
+        SOCKET.emit("end_match");
     }
 }
 
 // Self explanatory
 function can_promote(cell){
-    console.log(GAME.moves({square: cell, verbose: true}));
     for (const move of GAME.moves({ square: cell, verbose: true })){
         if (move.flags.includes('p')){
             return true;
@@ -122,5 +128,5 @@ function init_board(is_white) {
 
 // Transform row and column into standard cell labels
 function get_cell(r, c, is_white=1){
-    return String.fromCharCode(c+97) + (is_white*7 + (is_white ? -1 : 1)*(r + 1)).toString();
+    return String.fromCharCode(c+97) + (is_white*7 + (is_white ? -1 : 1)*(r) + 1).toString();
 }
