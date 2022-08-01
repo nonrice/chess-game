@@ -1,4 +1,5 @@
 import { Chess } from "https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js";
+import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 
 var IS_WHITE = true;
 const GAME = new Chess();
