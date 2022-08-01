@@ -1,15 +1,25 @@
 import { Chess } from "https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js";
 import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 
-var IS_WHITE = true;
+const SOCKET = io("https://chess-game.nonrice.repl.co");
+
+var IS_WHITE = false;
 const GAME = new Chess();
 var SEL = false;
 var SEL_CELL = "";
 
-const socket = io("https://chess-game.nonrice.repl.co");
-//socket.on("found_match", (is_white) => {IS_WHITE = is_white});
+SOCKET.on("start_match", (is_white) => {
+    IS_WHITE = is_white;
+    init_board(IS_WHITE);
+});
 
-init_board(IS_WHITE);
+SOCKET.on("opp_move", (opp_from, opp_to, opp_promotion_piece) => {
+    GAME.move({
+        from: opp_from,
+        to: opp_to,
+        promotion: opp_promotion_piece
+    });
+})
 
 function click(){
     var cell = this.id;
@@ -29,23 +39,26 @@ function click(){
             }
         }
 
-        // NEED TO SOMEHOW SEND THIS TO THE OTHER GUY
-        GAME.move({
+        if (GAME.move({
             from: SEL_CELL,
             to: cell,
             promotion: promotion_piece  
-        });
+        }) != null){
+            SOCKET.emit("move", SEL_CELL, cell, promotion_piece);
+        }
 
         draw_pieces();
         clear_moves();
         SEL = false;
     }
-
     if (GAME.game_over()){
-        alert("GAME IS OVER")
+        alert("GAME IS OVER");
+        document.getElementById("board").innerHTML = ""; // Destory the board   
+        socket.emit("end_match");
     }
 }
 
+// Self explanatory
 function can_promote(cell){
     console.log(GAME.moves({square: cell, verbose: true}));
     for (const move of GAME.moves({ square: cell, verbose: true })){
@@ -56,6 +69,7 @@ function can_promote(cell){
     return false;
 }
 
+// Self explanatory
 function draw_pieces(){
     const board = GAME.board();
     for (var r=0; r<8; ++r) for (var c=0; c<8; ++c) {
@@ -68,12 +82,12 @@ function draw_pieces(){
     }
 }
 
+// Adds selection cosmetics to board to display valid moves
 function draw_moves(cell){
     const moves = GAME.moves({
         square: cell,
         verbose: true
     });
-
     clear_moves();
     document.getElementById(cell).classList.add("board-cell--selected");
     for (const move of moves){
@@ -81,12 +95,14 @@ function draw_moves(cell){
     }
 }
 
+// Remove selection cosmetics from board
 function clear_moves(){
     for (var r=0; r<8; ++r) for (var c=0; c<8; ++c) {
         document.getElementById(get_cell(r, c)).classList.remove("board-cell--selected");
     }
 }
 
+// Initializes board cells
 function init_board(is_white) {
     const board = document.getElementById("board");
     for (var r=0; r<8; ++r) for (var c=0; c<8; ++c) {
@@ -104,6 +120,7 @@ function init_board(is_white) {
     draw_pieces();
 }
 
+// Transform row and column into standard cell labels
 function get_cell(r, c, is_white=1){
     return String.fromCharCode(c+97) + (is_white*7 - r + 1).toString();
 }
