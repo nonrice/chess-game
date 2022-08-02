@@ -41,6 +41,7 @@ body {
 }
 
 .board-cell--selected{
-    background-image: url("assets/sel.svg");
+    background-image: url("assets/board/sel.svg");
     background-size: var(--cell-side);
 }
+

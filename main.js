@@ -2,7 +2,6 @@ import { Chess } from "https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/ch
 import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 
 const SOCKET = io("https://chess-game.nonrice.repl.co");
-
 var IS_WHITE = false;
 const GAME = new Chess();
 var SEL = false;
@@ -24,8 +23,8 @@ SOCKET.on("opp_move", (opp_from, opp_to, opp_promotion_piece) => {
 
 SOCKET.on("end_match", () => {
     alert("GAME IS OVER");
-    document.getElementById("board").innerHTML = ""; // Destory the board   
-})
+    document.getElementById("board").innerHTML = ""; // Destory the board
+});
 
 function click(){
     var cell = this.id;
@@ -35,12 +34,10 @@ function click(){
         draw_moves(SEL_CELL);
     } else {
         var promotion_piece = "";
-        if (can_promote(SEL_CELL)){
+        if (will_promote(SEL_CELL, cell)){
             while (true){
                 promotion_piece = prompt("Piece to promote to? (n, b, r, k, q)");
-                if (promotion_piece.length == 1 && "nbrkq".includes(promotion_piece)){
-                    break;
-                }
+                if (promotion_piece.length == 1 && "nbrkq".includes(promotion_piece)) break;
                 alert("Not a valid piece dumbo");
             }
         }
@@ -50,7 +47,6 @@ function click(){
             to: cell,
             promotion: promotion_piece  
         }) != null){
-            console.log("it send");
             SOCKET.emit("move", SEL_CELL, cell, promotion_piece);
         }
 
@@ -59,41 +55,31 @@ function click(){
         SEL = false;
     }
     if (GAME.game_over()){
+        SOCKET.emit("end_match");
         alert("GAME IS OVER");
         document.getElementById("board").innerHTML = ""; // Destory the board   
-        SOCKET.emit("end_match");
     }
 }
 
-// Self explanatory
-function can_promote(cell){
-    for (const move of GAME.moves({ square: cell, verbose: true })){
-        if (move.flags.includes('p')){
-            return true;
-        }
-    }
-    return false;
+function will_promote(from, to){
+    return GAME.moves({ square: from, verbose: true }).some((move) => {
+        return move.to == to && move.flags.includes('p');
+    });
 }
 
-// Self explanatory
 function draw_pieces(){
     const board = GAME.board();
     for (var r=0; r<8; ++r) for (var c=0; c<8; ++c) {
         var cell = document.getElementById(get_cell(r, c));
+        cell.innerHTML = "";
         if (board[r][c] != null){
-            cell.innerHTML = "<img src='assets/" + board[r][c].color + board[r][c].type + ".svg' />";
-        } else {
-            cell.innerHTML = "";
+            cell.innerHTML = "<img src='assets/board/" + board[r][c].color + board[r][c].type + ".svg' />";
         }
     }
 }
 
-// Adds selection cosmetics to board to display valid moves
 function draw_moves(cell){
-    const moves = GAME.moves({
-        square: cell,
-        verbose: true
-    });
+    const moves = GAME.moves({ square: cell, verbose: true });
     clear_moves();
     document.getElementById(cell).classList.add("board-cell--selected");
     for (const move of moves){
@@ -101,22 +87,21 @@ function draw_moves(cell){
     }
 }
 
-// Remove selection cosmetics from board
 function clear_moves(){
     for (var r=0; r<8; ++r) for (var c=0; c<8; ++c) {
         document.getElementById(get_cell(r, c)).classList.remove("board-cell--selected");
     }
 }
 
-// Initializes board cells
 function init_board(is_white) {
     const board = document.getElementById("board");
+    board.innerHTML = "";
     for (var r=0; r<8; ++r) for (var c=0; c<8; ++c) {
         var cell = document.createElement("div");
         cell.classList.add("board-cell");
         cell.setAttribute("id", get_cell(r, c, is_white));
         cell.addEventListener("click", click);
-        if ((r*7+c) % 2) {
+        if ((r*7+c+1-is_white) % 2) {
             cell.classList.add("board-cell--black");
         } else {
             cell.classList.add("board-cell--white");
@@ -126,7 +111,6 @@ function init_board(is_white) {
     draw_pieces();
 }
 
-// Transform row and column into standard cell labels
 function get_cell(r, c, is_white=1){
     return String.fromCharCode(c+97) + (is_white*7 + (is_white ? -1 : 1)*(r) + 1).toString();
 }
