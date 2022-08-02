@@ -44,7 +44,7 @@ IO.on("connection", (socket) => {
             delete PAIRS[socket.id];
         } else {
             log("DISCONNECT", socket.id);
-            QUEUE = -1;
+            if (QUEUE == socket.id) QUEUE = -1;
         }
     })
 });
