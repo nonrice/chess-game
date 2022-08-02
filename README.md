@@ -1,8 +1,7 @@
 # Eric's Chess Game
 
-Online chess game I hope to complete over summer break. Still a work in progress.
-
-![image](assets/screenshot.png)
+## Play it here!
+[nonrice.github.io/chess-game](https://nonrice.github.io/chess-game)
 
 ## Stuff done aleady
 - Self-made chessboard UI connected to chess implementation via [Chess.js](https://github.com/jhlywa/chess.js)
@@ -10,6 +9,5 @@ Online chess game I hope to complete over summer break. Still a work in progress
 - Hosting backend server via [repl.it](https://repl.it)
 
 ## Things to do
-- Refactor and modularize javascript
 - Add usernames 
 

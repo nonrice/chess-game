@@ -1,5 +1,5 @@
 import { createServer } from "http";
-import { Server } from "socket.io";
+import { Server } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 
 const httpServer = createServer();
 const IO = new Server(httpServer, {
