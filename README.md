@@ -10,5 +10,6 @@ Online chess game I hope to complete over summer break. Still a work in progress
 - Hosting backend server via [repl.it](https://repl.it)
 
 ## Things to do
-- Better UI before/after the actual game
+- Refactor and modularize javascript
+- Add usernames 
 
