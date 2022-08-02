@@ -3,9 +3,9 @@ import { Server } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 
 const httpServer = createServer();
 const IO = new Server(httpServer, {
-  cors: {
-    origin: "*"
-  }
+    cors: {
+        origin: "*"
+    }
 });
 
 var QUEUE = -1;
@@ -19,8 +19,9 @@ IO.on("connection", (socket) => {
         log("START_GAME", socket.id + ", " + QUEUE);
         PAIRS[socket.id] = QUEUE;
         PAIRS[QUEUE] = socket.id;
-        IO.to(socket.id).emit("start_match", true);
-        IO.to(QUEUE).emit("start_match", false);
+        var flip_white = Math.random() > 0.5;
+        IO.to(socket.id).emit("start_match", flip_white);
+        IO.to(QUEUE).emit("start_match", !flip_white);
         QUEUE = -1;
     }
 
@@ -31,8 +32,8 @@ IO.on("connection", (socket) => {
         delete PAIRS[socket.id];
     });
     
-    socket.on("move", (from, to, promotIOn) => {
-        IO.to(PAIRS[socket.id]).emit("opp_move", from, to, promotIOn);
+    socket.on("move", (from, to, promotion) => {
+        IO.to(PAIRS[socket.id]).emit("opp_move", from, to, promotion);
     });
 
     socket.on("disconnect", () => {
@@ -42,7 +43,7 @@ IO.on("connection", (socket) => {
             delete PAIRS[PAIRS[socket.id]];
             delete PAIRS[socket.id];
         } else {
-            log("LEAVE_QUEUE", socket.id);
+            log("DISCONNECT", socket.id);
             QUEUE = -1;
         }
     })
