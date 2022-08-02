@@ -45,7 +45,7 @@ export function draw_pieces(game){
         var cell = document.getElementById(get_cell(r, c));
         cell.innerHTML = "";
         if (board[r][c] != null){
-            cell.innerHTML = "<img src='../assets/lichess_pixel/" + board[r][c].color + board[r][c].type + ".svg' />";
+            cell.innerHTML = "<img src='assets/lichess_pixel/" + board[r][c].color + board[r][c].type + ".svg' />";
         }
     }
 }
