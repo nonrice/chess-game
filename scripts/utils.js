@@ -8,8 +8,8 @@ export function click(is_white, selection, socket, game){
         var promotion_piece = "";
         if (will_promote(selection.cell, cell, game)){
             while (true){
-                promotion_piece = prompt("Piece to promote to? (n, b, r, k, q)");
-                if (promotion_piece.length == 1 && "nbrkq".includes(promotion_piece)) break;
+                promotion_piece = prompt("Piece to promote to? (n, b, r, q)");
+                if (promotion_piece.length == 1 && "nbrq".includes(promotion_piece)) break;
                 alert("Not a valid piece dumbo");
             }
         }
@@ -45,7 +45,7 @@ export function draw_pieces(game){
         var cell = document.getElementById(get_cell(r, c));
         cell.innerHTML = "";
         if (board[r][c] != null){
-            cell.innerHTML = "<img src='../lichess_pixel/board/" + board[r][c].color + board[r][c].type + ".svg' />";
+            cell.innerHTML = "<img src='../assets/lichess_pixel" + board[r][c].color + board[r][c].type + ".svg' />";
         }
     }
 }
