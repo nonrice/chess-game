@@ -31,13 +31,13 @@ function main(){
     });
 
     SOCKET.on("end_match", () => {
-        alert("Game ended. Note that this is also triggered when your opponent disconnect.");
+        alert("Game ended. Note that this is also triggered when your opponent disconnects.");
         location.reload();
     });
 
     function click(){
         var cell = this.id;
-        if (!SEL){
+        if (!SEL && GAME.get(this.id)!=null && (IS_WHITE == (GAME.get(this.id).color == 'w'))){
             SEL_CELL = cell;
             SEL = true;
             draw_moves(SEL_CELL);
