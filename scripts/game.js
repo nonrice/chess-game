@@ -27,8 +27,8 @@ export function click(is_white, selection, socket, game){
         selection.active = false;
     }
     if (game.game_over()){
-        socket.emit("end_match");
         alert("Game finished.");
+        socket.emit("end_match");
         location.reload();
     }
 }
@@ -65,24 +65,13 @@ function clear_moves(){
     }
 }
 
-export function init_board(is_white, selection, click, socket, game) {
-    const board = document.getElementById("board");
-    board.innerHTML = "";
-    for (var r=0; r<8; ++r) for (var c=0; c<8; ++c) {
-        var cell = document.createElement("div");
-        cell.classList.add("board-cell");
-        cell.setAttribute("id", get_cell(r, c, is_white));
+export function attatch_click(is_white, selection, click, socket, game){
+    const cells = document.getElementsByClassName("board-cell");
+    for (const cell of cells){
         cell.addEventListener("click", click.bind(cell, is_white, selection, socket, game));
-        if ((r*7+c+1-is_white) % 2) {
-            cell.classList.add("board-cell--black");
-        } else {
-            cell.classList.add("board-cell--white");
-        }
-        board.append(cell);
     }
-    draw_pieces(game);
 }
 
-function get_cell(r, c, is_white=1){
+export function get_cell(r, c, is_white=1){
     return String.fromCharCode(c+97) + (is_white*7 + (is_white ? -1 : 1)*(r) + 1).toString();
 }

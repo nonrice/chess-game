@@ -4,14 +4,24 @@
     <link href="styles/stylesheet.css" rel="stylesheet">
 </head>
 <body class="center">
-    <script type="module" src="scripts/utils.js"></script>
+    <script type="module" src="scripts/game.js"></script>
+    <script type="module" src="scripts/ui.js"></script>
     <script type="module" src="scripts/main.js"></script>
-    <div id="board">
-        <div id="menu">
-            <div id="menu-box">
-                <h1 class="text">Welcome to Eric's Chess Game</h1>
-                <button class="menu-box--button" id="main_entry">Join Queue</button>
+    <div class="content">
+        <div class="user-box">
+            <h1 id="user-box--opponent">bruh</h1>
+        </div>
+        <div id="board">
+            <div id="menu">
+                <div id="menu-box">
+                    <h1 class="text">Welcome to Eric's Chess Game</h1>
+                    <input class="menu-box--input" placeholder="Username"></input>
+                    <button class="menu-box--button" id="main_entry">Join Queue</button>
+                </div>
             </div>
+        </div>
+        <div class="user-box">
+            <h1 id="user-box--player">bruh</h1>
         </div>
     </div>
 </body>

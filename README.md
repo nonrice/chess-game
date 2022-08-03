@@ -9,5 +9,5 @@
 - Hosting backend server via [repl.it](https://repl.it)
 
 ## Things to do
-- Add usernames 
+- Implement a better notification system than window alerts 
 
