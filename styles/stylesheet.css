@@ -125,11 +125,15 @@ h1, p, button, input {
 }
 
 .user-box {
-    background-color: black;
     display: none;
+    background-color: black;
     border-radius: 0.5rem;
     width: var(--board-side);
     box-sizing: border-box;
     margin: 0.3rem 0 0.3rem 0;
     padding: 0.1rem 1rem 0.1rem 1rem; 
+}
+
+.time-box {
+    float: right;
 }

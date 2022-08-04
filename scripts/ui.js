@@ -2,9 +2,14 @@ import { get_cell } from "./game.js";
 
 export var USERNAME = "";
 
+export function set_times(player, opponent){
+    document.getElementById("time-box--player").innerHTML = pad(Math.floor(player/60)) + ":" + pad(player%60);
+    document.getElementById("time-box--opponent").innerHTML = pad(Math.floor(opponent/60)) + ":" + pad(opponent%60);
+}
+
 export function enter(){
     USERNAME = document.getElementsByClassName("menu-box--input")[0].value;
-    if (USERNAME.length > 20 || USERNAME.length < 1){
+    if (USERNAME.length > 19 || USERNAME.length < 1){
         alert("Username too long/short.");
     } else {
         document.getElementById("menu-box").innerHTML = "<h1>Waiting for other player...</h1><p id='status'>Connecting to server...</p>";
@@ -49,4 +54,9 @@ export function show_user_boxes(){
             box.style.display = "block";
         }
     }
+}
+
+function pad(number){
+    if (number < 10) return "0" + number.toString();
+    return number.toString();
 }

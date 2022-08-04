@@ -10,4 +10,5 @@
 
 ## Things to do
 - Implement a better notification system than window alerts 
+- Give players reason when the game is ended, as well as sort out the game ending logistics
 
