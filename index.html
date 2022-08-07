@@ -7,6 +7,16 @@
     <script type="module" src="scripts/game.js"></script>
     <script type="module" src="scripts/ui.js"></script>
     <script type="module" src="scripts/main.js"></script>
+    <div class="popup" id="popup-msg">
+        <p id="popup-content">Nice</p>
+        <button class="button" id="popup-close">Alright</button>
+    </div>
+    <div class="popup" id="popup-promo">
+        <div class="img-wrap"><img src="assets/lichess_pixel/bp.svg" class="button promo" id="pn"></div>
+        <div class="img-wrap"><img src="assets/lichess_pixel/bp.svg" class="button promo" id="pb"></div>
+        <div class="img-wrap"><img src="assets/lichess_pixel/bp.svg" class="button promo" id="pr"></div>
+        <div class="img-wrap"><img src="assets/lichess_pixel/bp.svg" class="button promo" id="pq"></div>
+    </div>
     <div class="content">
         <div class="user-box">
             <h1>
@@ -19,7 +29,7 @@
                 <div id="menu-box">
                     <h1 class="text">Welcome to Eric's Chess Game</h1>
                     <input class="menu-box--input" placeholder="Username"></input>
-                    <button class="menu-box--button" id="main_entry">Join Queue</button>
+                    <button class="button" id="main_entry">Join Queue</button>
                 </div>
             </div>
         </div>

@@ -1,4 +1,6 @@
-export function click(is_white, selection, socket, game){
+import { internal_alert, get_promotion } from "./ui.js";
+
+export async function click(is_white, selection, socket, game){
     var cell = this.id;
     if (!selection.active && game.get(this.id)!=null && (is_white == (game.get(this.id).color == 'w'))){
         selection.cell = cell;
@@ -7,11 +9,7 @@ export function click(is_white, selection, socket, game){
     } else {
         var promotion_piece = "";
         if (will_promote(selection.cell, cell, game)){
-            while (true){
-                promotion_piece = prompt("Piece to promote to? (n, b, r, q)");
-                if (promotion_piece.length == 1 && "nbrq".includes(promotion_piece)) break;
-                alert("Not a valid piece dumbo");
-            }
+            promotion_piece = await get_promotion(is_white);
         }
 
         if (game.move({
@@ -27,9 +25,7 @@ export function click(is_white, selection, socket, game){
         selection.active = false;
     }
     if (game.game_over()){
-        alert("Game finished.");
-        socket.emit("end_match");
-        location.reload();
+        socket.emit("end_match", get_verdict(game));
     }
 }
 
@@ -74,4 +70,19 @@ export function attatch_click(is_white, selection, click, socket, game){
 
 export function get_cell(r, c, is_white=1){
     return String.fromCharCode(c+97) + (is_white*7 + (is_white ? -1 : 1)*(r) + 1).toString();
+}
+
+function get_verdict(game){
+    var side = (game.turn == 'w') ? "black" : "white";
+    if (game.in_checkmate()){
+        return side + " wins via checkmate";  
+    } else if (game.in_draw()){
+        return "draw";
+    } else if (game.in_stalemate()){
+        return "stalemate";
+    } else if (game.in_threefold_repetition()){
+        return "threefold repetition (draw)";
+    } else if (game.insufficient_material()){
+        return "insufficient material (draw)";
+    }
 }

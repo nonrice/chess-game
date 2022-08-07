@@ -1,5 +1,7 @@
 import { get_cell } from "./game.js";
 
+document.getElementById("popup-close").addEventListener("click", hide_internal_alert);
+
 export var USERNAME = "";
 
 export function set_times(player, opponent){
@@ -10,9 +12,11 @@ export function set_times(player, opponent){
 export function enter(){
     USERNAME = document.getElementsByClassName("menu-box--input")[0].value;
     if (USERNAME.length > 19 || USERNAME.length < 1){
-        alert("Username too long/short.");
+        internal_alert("Username too long/short.");
+        return false;
     } else {
         document.getElementById("menu-box").innerHTML = "<h1>Waiting for other player...</h1><p id='status'>Connecting to server...</p>";
+        return true;
     }
 }
 
@@ -54,6 +58,47 @@ export function show_user_boxes(){
             box.style.display = "block";
         }
     }
+}
+
+export function internal_alert(message){
+    document.getElementById("popup-content").innerHTML = message;
+    document.getElementById("popup-msg").style.display = "block";
+}
+
+function hide_internal_alert(){
+    document.getElementById("popup-msg").style.display = "none";
+}
+
+export function selected_promotion(){
+    document.getElementById("popup-promo").style.display = "none";
+    console.log(piece);
+    return piece;
+}
+
+export async function get_promotion(is_white){
+    document.getElementById("popup-promo").style.display = "flex";
+    var pieces = document.getElementsByClassName("promo");
+    for (var i=0; i<4; ++i){
+        pieces[i].setAttribute("src", "assets/lichess_pixel/" + (is_white ? "w" : "b") + "nbrq"[i] + ".svg");
+    }
+    return new Promise((resolve) => {
+        pieces[0].onclick = () => {
+            resolve("n");
+            document.getElementById("popup-promo").style.display = "none";
+        };
+        pieces[1].onclick = () => {
+            resolve("b");
+            document.getElementById("popup-promo").style.display = "none";
+        };
+        pieces[2].onclick = () => {
+            resolve("r");
+            document.getElementById("popup-promo").style.display = "none";
+        };
+        pieces[3].onclick = () => {
+            resolve("q");
+            document.getElementById("popup-promo").style.display = "none";
+        };
+    });
 }
 
 function pad(number){

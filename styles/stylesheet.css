@@ -99,7 +99,7 @@ h1, p, button, input {
 }
 
 
-.menu-box--button {
+.button {
     background-color: white;
     color: black;
     border: none;
@@ -120,7 +120,7 @@ h1, p, button, input {
     width: 40%;
 }
 
-.menu-box--button:hover {
+.button:hover {
     box-shadow: 0 0 1rem white;
 }
 
@@ -136,4 +136,29 @@ h1, p, button, input {
 
 .time-box {
     float: right;
+}
+
+.popup {
+    display: none;
+    position: absolute;
+    background-color: rgb(117, 44, 254);
+    padding: 0.1rem 1rem 1rem 1rem;
+    border-radius: 1rem;
+    width: 20vw;
+    width: calc(var(--cell-side)*4);
+}
+
+#popup-promo {
+    padding: 1rem 1rem 1rem 1rem;
+    display: none;
+    width: calc(var(--cell-side)*4);
+}
+
+.img-wrap {
+    flex: 1;
+    margin: 0.2rem;
+}
+
+.promo {
+    padding: 0.1rem;
 }

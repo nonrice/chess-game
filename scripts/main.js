@@ -1,7 +1,7 @@
 import { Chess } from "https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.13.4/chess.min.js";
 import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 import { attatch_click, draw_pieces, click } from "./game.js";
-import { init_board, show_user_boxes, set_player_box, set_opponent_box, enter, connected, USERNAME, set_times } from "./ui.js";
+import { init_board, show_user_boxes, set_player_box, set_opponent_box, enter, connected, USERNAME, set_times, internal_alert, get_promotion } from "./ui.js";
 
 document.getElementById("main_entry").addEventListener("click", main);
 
@@ -13,7 +13,7 @@ function main(){
         cell: ""
     }
 
-    enter();
+    if (!enter()) return;
 
     const SOCKET = io("https://chess-game.nonrice.repl.co");
     
@@ -45,8 +45,8 @@ function main(){
         draw_pieces(GAME);
     });
 
-    SOCKET.on("end_match", () => {
-        alert("Game ended. Note that this is also triggered when your opponent disconnects.");
-        location.reload();
+    SOCKET.on("end_match", (verdict) => {
+        internal_alert("Game ended. Reason: " + verdict + ". Reload the page to return to matchmaking.");
+        SOCKET.disconnect();
     });
 }
