@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <head>
     <title>Eric's Chess Game</title>
-    <link href="styles/stylesheet.css" rel="stylesheet">
+    <link href="styles/board.css" rel="stylesheet">
+    <link href="styles/ui.css" rel="stylesheet">
 </head>
 <body class="center">
     <script type="module" src="scripts/game.js"></script>
     <script type="module" src="scripts/ui.js"></script>
     <script type="module" src="scripts/main.js"></script>
     <div class="popup" id="popup-msg">
-        <p id="popup-content">Nice</p>
-        <button class="button" id="popup-close">Alright</button>
+        <p id="popup-msg--content">Nice</p>
+        <button class="button" id="popup-msg--close">Alright</button>
     </div>
     <div class="popup" id="popup-promo">
-        <div class="img-wrap"><img src="assets/lichess_pixel/bp.svg" class="button promo" id="pn"></div>
-        <div class="img-wrap"><img src="assets/lichess_pixel/bp.svg" class="button promo" id="pb"></div>
-        <div class="img-wrap"><img src="assets/lichess_pixel/bp.svg" class="button promo" id="pr"></div>
-        <div class="img-wrap"><img src="assets/lichess_pixel/bp.svg" class="button promo" id="pq"></div>
+        <div class="popup-promo--wrapper"><img src="assets/lichess_pixel/bp.svg" class="button popup-promo--piece"></div>
+        <div class="popup-promo--wrapper"><img src="assets/lichess_pixel/bp.svg" class="button popup-promo--piece"></div>
+        <div class="popup-promo--wrapper"><img src="assets/lichess_pixel/bp.svg" class="button popup-promo--piece"></div>
+        <div class="popup-promo--wrapper"><img src="assets/lichess_pixel/bp.svg" class="button popup-promo--piece"></div>
     </div>
-    <div class="content">
-        <div class="user-box">
+    <div>
+        <div class="userbox">
             <h1>
-                <span id="user-box--opponent">1234567890123456789</span>
-                <span class="time-box" id="time-box--opponent">10:00</span>
+                <span id="userbox-name--opponent">1234567890123456789</span>
+                <span class="userbox-time" id="userbox-time--opponent">10:00</span>
             </h1>
         </div>
         <div id="board">
-            <div id="menu">
-                <div id="menu-box">
-                    <h1 class="text">Welcome to Eric's Chess Game</h1>
-                    <input class="menu-box--input" placeholder="Username"></input>
-                    <button class="button" id="main_entry">Join Queue</button>
+            <div id="menubox-wrapper">
+                <div id="menubox">
+                    <h1>Welcome to Eric's Chess Game</h1>
+                    <input class="menubox-input" placeholder="Username"></input>
+                    <button class="button" id="menubox-entry">Join Queue</button>
                 </div>
             </div>
         </div>
-        <div class="user-box">
+        <div class="userbox">
             <h1>
-                <span id="user-box--player">1234567890123456789</span>
-                <span class="time-box" id="time-box--player">10:00</span>
+                <span id="userbox-name--player">1234567890123456789</span>
+                <span class="userbox-time" id="userbox-time--player">10:00</span>
             </h1>
         </div>
     </div>

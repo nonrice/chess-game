@@ -9,5 +9,4 @@
 - Hosting backend server via [repl.it](https://repl.it)
 
 ## Things to do
-- Major refactor of code. The project will be completely finished after that!
-
+- None! The game is finished!
